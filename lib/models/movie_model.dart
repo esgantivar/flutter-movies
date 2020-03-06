@@ -12,6 +12,7 @@ class Movies {
 }
 
 class Movie {
+  String uniqueId;
   double popularity;
   int voteCount;
   bool video;
@@ -62,6 +63,10 @@ class Movie {
   }
 
   String posterImg() {
-    return 'http://image.tmdb.org/t/p/w500/$posterPath';
+    return 'http://image.tmdb.org/t/p/w500$posterPath';
+  }
+
+  String backgroundImg() {
+    return 'http://image.tmdb.org/t/p/w500$backdropPath';
   }
 }

@@ -25,31 +25,39 @@ class MovieHorizontal extends StatelessWidget {
           controller: _pageController,
           itemCount: movies.length,
           itemBuilder: (context, index) {
-            return _card(movie: movies[index]);
+            return _card(movie: movies[index], context: context);
           },
         ));
   }
 
-  Widget _card({@required Movie movie}) {
-    return Container(
+  Widget _card({@required Movie movie, @required BuildContext context}) {
+    movie.uniqueId ='${movie.id}-poster';
+    final card = Container(
         margin: EdgeInsets.only(right: 5.0),
         child: Column(children: <Widget>[
-          ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              child: FadeInImage(
-                image: NetworkImage(movie.posterImg()),
-                placeholder: AssetImage('assets/img/no-image.jpg'),
-                fit: BoxFit.cover,
-                height: 140,
-              )),
+          Hero(
+              tag: movie.uniqueId,
+              child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: FadeInImage(
+                    image: NetworkImage(movie.posterImg()),
+                    placeholder: AssetImage('assets/img/no-image.jpg'),
+                    fit: BoxFit.cover,
+                    height: 140,
+                  ))),
           SizedBox(height: 5),
           Text(movie.title, overflow: TextOverflow.ellipsis)
         ]));
+    return GestureDetector(
+        onTap: () {
+          Navigator.pushNamed(context, 'detalle', arguments: movie);
+        },
+        child: card);
   }
 
   List<Widget> _cards() {
     return movies.map((movie) {
-      return _card(movie: movie);
+      return Text('.'); //_card(movie: movie);
     }).toList();
   }
 }
